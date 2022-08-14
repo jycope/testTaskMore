@@ -1,0 +1,28 @@
+@import url('../fonts/transfonter.org-20220814-141250/stylesheet.css');
+@import url('./normalize.scss');
+
+aside {
+    padding: 20px;
+    background-color: #D9D9D9;
+    max-width: 252px;
+    height: 100%;
+
+    b {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+}
+
+body {
+    font-family: 'Inter';
+    font-size: 16px;
+    height: 100%;
+}
+
+.categories {
+    &__item {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-weight: 400;
+    }
+}
