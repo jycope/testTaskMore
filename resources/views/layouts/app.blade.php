@@ -12,6 +12,22 @@
 </head>
 
 <body>
-    @yield('content')
+    <aside>
+        <ul>
+            @foreach ($categories as $category)
+            <li class="categories__item categories__item-parent"><a
+                    href="{{ route('categories.show', $category) }}">{{ $category->name }}</a></li>
+            <ul>
+                @foreach ($category->childrenCategories as $childCategory)
+                @include('admin.child_category', ['child_category' => $childCategory])
+                @endforeach
+            </ul>
+            @endforeach
+        </ul>
+    </aside>
+    <main class="category-content">
+        @yield('content')
+    </main>
+
     <script src="{{asset('js/app.js')}}"></script>
 </body>

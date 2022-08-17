@@ -25,9 +25,17 @@ body {
 .categories {
     padding-left: 0;
     &__item {
-        display: inline-block;
-        margin-bottom: 10px;
         font-weight: 400;
+        a {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: black!important;
+            text-decoration: none;
+        }
+
+        &-parent {
+            font-weight: 700;
+        }
     }
 }
 
