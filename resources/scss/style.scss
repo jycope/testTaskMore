@@ -43,6 +43,7 @@ body {
             background-color: #18C9F0;
             width: 100%;
         }
+
     }
 }
 
@@ -66,6 +67,9 @@ main {
     &__content {
         margin-top: 25px;
         margin-bottom: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 60px;
     }
     
     &-item {
@@ -73,6 +77,8 @@ main {
             margin-bottom: 25px;
             width: 300px;
             height: 300px;
+            object-fit:cover;
+            background-position: center;
         }
 
         &__name, &__price {
