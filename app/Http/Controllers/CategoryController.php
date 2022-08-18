@@ -50,10 +50,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
         $category = Category::find($id);
-        $categories = Category::all();
+        $products = $category->products;
 
-        return view('categories.show', compact('category', 'categories'));
+        return view('categories.show', compact('categories', 'products', 'category'));
     }
 
     /**
