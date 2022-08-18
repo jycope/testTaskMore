@@ -46,15 +46,21 @@ class ProductController extends Controller
     {
         $data = $this->validate($request, [
             'price' => 'required|integer',
-            'img' => 'required',
             'name' => 'required',
             'category_id' => 'required'
         ]);
+
+        $image = $request->file('img');
+        $photo = $image->path();
+        $image->storeAs('public/uploads', $photo);
+
+        $data['img'] = $photo;
+
         $product = new Product();
         $product->fill($data);
         $product->save();
         return redirect()
-            ->route('categories.index');
+            ->route('categories.show', $category);
     }
 
     /**
