@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 // Route::get('categories', [CategoryController::class, 'index']);
 
 Route::resource('categories', CategoryController::class);
+Route::resource('categories.product', ProductController::class);
