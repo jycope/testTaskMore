@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('name');
             $table->string('img');
+            $table->string('description');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
