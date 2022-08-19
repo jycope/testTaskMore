@@ -2,10 +2,18 @@
 
 @section('content')
 <h1 class="category-content__title">{{$category->name ?? ''}}</h1>
-<sub class="category-content__subtitle d-block">Категория 2 / Подкатегория 2-1</sub>
+<sub
+    class="category-content__subtitle d-block">{{ collect($category->parentCategories())->pluck('name')->whereNotNull()->join('/') }}</sub>
 <a href="{{ route('categories.product.create', $category) }}" class="btn btn-primary mt-2">Создать
     товар</a>
 <a href="{{ route('categories.category.create', $category) }}" class="btn btn-primary mt-2">Создать подкатегорию</a>
+<a href="{{ route('categories.category.edit', $category) }}" class="btn btn-primary mt-2">Редактировать категорию</a>
+
+{{ Form::open(['route' => ['categories.destroy', $category], 'method' => 'delete', 'class' => 'd-inline-block']) }}
+<button type="submit" class="btn btn-primary mt-2" data-confirm="Вы уверены?" data-method="delete"
+    rel="nofollow">Удалить категорию</button>
+{{ Form::close() }}
+
 <div class="category-content__content">
     @foreach ($products as $product)
     <a href="{{ route('categories.product.show', [$category, $product]) }}"
