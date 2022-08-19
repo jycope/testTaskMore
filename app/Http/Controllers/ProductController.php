@@ -47,7 +47,8 @@ class ProductController extends Controller
         $data = $this->validate($request, [
             'price' => 'required|integer',
             'name' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'description' => 'required|max:200'
         ]);
 
         $image = $request->file('img');
@@ -72,7 +73,11 @@ class ProductController extends Controller
      */
     public function show(Category $category, Product $product)
     {
-        //
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+
+        return view('product.show', compact('categories', 'product'));
     }
 
     /**
