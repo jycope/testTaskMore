@@ -24,6 +24,7 @@
             </ul>
             @endforeach
         </ul>
+        <a href="{{ route('categories.create') }}" class="categories__create">Создать категорию</a>
     </aside>
     <main class="category-content">
         @yield('content')
