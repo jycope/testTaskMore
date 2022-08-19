@@ -70,6 +70,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $products = $category->products ?? '';
 
+
         return view('categories.show', compact('categories', 'products', 'category'));
     }
 
@@ -79,21 +80,31 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+        return view('categories.edit', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $category->fill($data);
+        $category->save();
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
@@ -102,8 +113,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->products()->delete();
+        $category->childrenCategories()->delete();
+        $category->categories()->delete();
+        $category->delete();
+
+        return redirect()
+            ->route('categories.index');
     }
 }
