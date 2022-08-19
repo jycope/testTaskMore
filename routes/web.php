@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('categories', CategoryController::class);
 Route::resource('categories.product', ProductController::class);
+Route::get('categories/{category}/create', [SubCategoryController::class, 'create'])->name('categories.category.create');
+Route::post('categories/{category}', [SubCategoryController::class, 'store'])->name('categories.category.store');

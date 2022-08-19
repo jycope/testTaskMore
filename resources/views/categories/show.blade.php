@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="category-content__title">{{$category->name}}</h1>
+<h1 class="category-content__title">{{$category->name ?? ''}}</h1>
 <sub class="category-content__subtitle d-block">Категория 2 / Подкатегория 2-1</sub>
 <a href="{{ route('categories.product.create', $category) }}" class="btn btn-primary mt-2">Создать
     товар</a>
+<a href="{{ route('categories.category.create', $category) }}" class="btn btn-primary mt-2">Создать подкатегорию</a>
 <div class="category-content__content">
     @foreach ($products as $product)
     <a href="{{ route('categories.product.show', [$category, $product]) }}"
