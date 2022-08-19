@@ -75,7 +75,10 @@ class SubCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+        return view('categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -83,12 +86,18 @@ class SubCategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Category  $category
-     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $category->fill($data);
+        $category->save();
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
