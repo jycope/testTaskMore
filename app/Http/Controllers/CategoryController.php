@@ -29,6 +29,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $category = new Category();
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+
+        return view('categories.create', compact('category', 'categories'));
     }
 
     /**
@@ -39,7 +45,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $category = new Category();
+        $category->fill($data);
+        $category->save();
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
@@ -54,7 +68,7 @@ class CategoryController extends Controller
             ->with('childrenCategories')
             ->get();
         $category = Category::find($id);
-        $products = $category->products;
+        $products = $category->products ?? '';
 
         return view('categories.show', compact('categories', 'products', 'category'));
     }
