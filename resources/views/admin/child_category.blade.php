@@ -1,4 +1,5 @@
-<li class="categories__item"><a href="{{ route('categories.show', $child_category) }}">{{ $child_category->name }}</a>
+<li class="categories__item {{ route('categories.show', $child_category) === url()->current() ? 'active': '' }}">
+    <a href="{{ route('categories.show', $child_category) }}">{{ $child_category->name }}</a>
 </li>
 @if ($child_category->categories)
 <ul>
