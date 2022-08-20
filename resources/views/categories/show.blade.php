@@ -10,7 +10,8 @@
 <a href="{{ route('categories.category.edit', $category) }}" class="btn btn-primary mt-2">Редактировать категорию</a>
 
 {{ Form::open(['route' => ['categories.destroy', $category], 'method' => 'delete', 'class' => 'd-inline-block']) }}
-<button type="submit" class="btn btn-primary mt-2" onclick="alert('Вы уверены')">Удалить категорию</button>
+<button type="submit" class="btn btn-primary mt-2" onClick="return confirm('Вы подтверждаете удаление?');">Удалить
+    категорию</button>
 {{ Form::close() }}
 
 <div class="category-content__content">

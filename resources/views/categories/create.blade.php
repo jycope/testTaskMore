@@ -2,15 +2,7 @@
 
 @section('content')
 
-@if ($errors->any())
-<div>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+@include('error')
 
 {{ Form::model($category, ['route' => 'categories.store', 'class' => 'd-flex justify-content-between flex-column gap-10 mt-4 m-auto'], 'enctype') }}
 
