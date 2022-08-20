@@ -77,7 +77,7 @@ class ProductController extends Controller
             ->with('childrenCategories')
             ->get();
 
-        return view('product.show', compact('categories', 'product'));
+        return view('product.show', compact('categories', 'product', 'category'));
     }
 
     /**
@@ -89,7 +89,11 @@ class ProductController extends Controller
      */
     public function edit(Category $category, Product $product)
     {
-        //
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+
+        return view('product.edit', compact('category', 'categories', 'product'));
     }
 
     /**
@@ -102,7 +106,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, Category $category, Product $product)
     {
-        //
+        $data = $this->validate($request, [
+            'price' => 'required|integer',
+            'name' => 'required',
+            'category_id' => 'required',
+            'description' => 'required|max:200'
+        ]);
+
+        $image = $request->file('img');
+        $photo = $image->path() . $image->getClientOriginalExtension();
+
+        unlink(public_path("storage/uploads{$product->img}"));
+
+        $data['img'] = $photo;
+
+        $image->storeAs('public/uploads', $photo);
+
+        $product->fill($data);
+        $product->save();
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
@@ -114,6 +137,9 @@ class ProductController extends Controller
      */
     public function destroy(Category $category, Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()
+            ->route('categories.index');
     }
 }
