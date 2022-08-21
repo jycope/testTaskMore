@@ -135,7 +135,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, Product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
 
